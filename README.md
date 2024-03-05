@@ -6,8 +6,11 @@ This plugin is licenced under the GPL v3 licence. See: https://www.gnu.org/licen
 Installation
 ------------
 
-1 - Copy the contents of the zip file which contains this readme.txt into the moodle/mod directory of your
-    Moodle installation.
+1 - Copy the contents of the zip file which contains this readme.txt into the moodle/editor/tiny/plugins/ directory of your
+Moodle installation.
+
 2 - Login to your Moodle system as an administrator.
+
 3 - Click the "Notifications" link in the "Administration" block.
+
 4 - Follow the on-screen instructions.

@@ -73,5 +73,12 @@ if ($hassiteconfig) {
                                               $options);
 
         $settings->add($feedback);
+
+        $internal = new admin_setting_configselect('tiny_medial/internal',
+                                              new lang_string('internal', 'tiny_medial'),
+                                              new lang_string('internal_desc', 'tiny_medial'),
+                                              $cfg->placeholder,
+                                              $options);
+        $settings->add($internal);
     }
 }

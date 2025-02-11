@@ -24,13 +24,13 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2024120901;
+$plugin->version = 2024120903;
 $plugin->requires  = 2022112800;
 $plugin->component = 'tiny_medial';
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = '8.5.19e';
+$plugin->release = '8.5.19f';
 $plugin->dependencies = [
-    'mod_helixmedia' => '2024120901'
+    'mod_helixmedia' => '2024120903',
 ];
 
 $plugin->supported = [401, 405];

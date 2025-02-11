@@ -114,7 +114,6 @@ export const getBaseurl = (editor) => editor.options.get(baseurlName);
  * @param {tinyMCE} editor The editor instance to fetch the value for
  * @returns {object} The value of the ltiurl option
  */
-//export const  = (editor) => editor.options.get();
 
 export const getLtiurl = (editor) => editor.options.get(ltiurlName);
 

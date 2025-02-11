@@ -29,8 +29,8 @@ require_once($CFG->dirroot.'/lib/filterlib.php');
 
 /**
  * Parses a list of module types and checks if they match the one we are in.
- * @param $param The list name to check
- * @return The module name string or false
+ * @param string $param The list name to check
+ * @return string The module name string or false
  */
 function tiny_medial_checklist($param) {
     global $PAGE, $DB;
@@ -49,7 +49,7 @@ function tiny_medial_checklist($param) {
 
 /**
  * Test if we have an active MEDIAL filter
- * @param $context (optional) The current context
+ * @param context $context (optional) The current context
  * @return true if there is a filter
  */
 function tiny_medial_has_filter($context = false) {

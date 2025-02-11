@@ -27,7 +27,6 @@
 import Templates from 'core/templates';
 import Pending from 'core/pending';
 import {getUserId, getOauthConsumerKey, getCourse, getPlayerSizeUrl, getBaseurl, getPlaceholder, getLinkOnly, getViewLaunchType} from './options';
-//import Selectors from 'tiny_medial/selectors';
 
 /**
  * Handle insertion of a new medial video
@@ -41,16 +40,19 @@ export const setLink = (preid, inserttype, editor) => {
     var xmlDoc = new XMLHttpRequest();
     var params = "resource_link_id=" + preid + "&user_id=" + getUserId(editor) +
         "&oauth_consumer_key=" + getOauthConsumerKey(editor) +
-        "&context_id="+ getCourse(editor) +
+        "&context_id=" + getCourse(editor) +
         "&include_height=Y";
 
     xmlDoc.onload = (response) => {
         const pendingPromise = new Pending('tiny_medial/setLink');
-        checkResponse(preid, inserttype, editor, response).then(pendingPromise.resolve);
+        checkResponse(preid, inserttype, editor, response).then(pendingPromise.resolve).catch(error => {
+            /* eslint-disable-next-line no-console */
+            console.log(error);
+        });
     };
     window.console.log(getPlayerSizeUrl(editor));
-    xmlDoc.open("POST", getPlayerSizeUrl(editor) , true);
-    xmlDoc.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xmlDoc.open("POST", getPlayerSizeUrl(editor), true);
+    xmlDoc.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlDoc.send(params);
 };
 
@@ -73,7 +75,7 @@ const checkResponse = async(preid, inserttype, editor, response) => {
     if (resp.length == 3 && resp[2] == 'Y') {
         audioonly = 1;
     }
-    window.console.log("audioonly="+audioonly);
+    window.console.log("audioonly=" + audioonly);
 
     var template = "";
     if (getLinkOnly(editor) || inserttype != 'iframe') {
@@ -97,8 +99,8 @@ const checkResponse = async(preid, inserttype, editor, response) => {
  */
 export const setMedialLink = async(preid, inserttype, editor, audioonly, launchtype, template) => {
 
-    var context = {url :
-        getEmbedUrl(editor) + "?type="+launchtype+"&responsive=1&medialembed="+inserttype+"&audioonly="+audioonly+"&l=" + preid
+    var context = {
+        url: getEmbedUrl(editor) + "?type=" + launchtype + "&responsive=1&medialembed=" + inserttype + "&audioonly=" + audioonly + "&l=" + preid
     };
 
     if (audioonly == 1) {

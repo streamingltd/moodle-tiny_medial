@@ -23,7 +23,6 @@
     {"audioonly": false, "preid": 100, "url": "https://medial.com"}
 }}
 <div class='embed-responsive {{^audioonly}}embed-responsive-16by9{{/audioonly}} helixmedia_embedheight'
-    {{#audioonly}}style='height:100px'{{/audioonly}} id='mediallaunch-{{preid}}'>
-    <iframe class='embed-responsive-item overflow-auto border-0' src='{{url}}' allow='fullscreen;'
-        sandbox='allow-scripts'></iframe>
+    {{#audioonly}}style='height:100px'{{/audioonly}}>
+    <iframe class='embed-responsive-item overflow-auto border-0' src='{{url}}' allow='fullscreen;'></iframe>
 </div>

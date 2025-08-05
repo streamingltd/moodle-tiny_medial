@@ -27,7 +27,8 @@
 import ModalFactory from 'core/modal_factory';
 import ModalEvents from 'core/modal_events';
 import MedialModal from 'tiny_medial/modal';
-import {getBaseurl, getLtiurl, getLaunchType, getLibLaunchType, getModType, getUserId, getOauthConsumerKey, getStatusUrl, getHideInsert, getEmbedOpt, getInsertDelay} from './options';
+import {getBaseurl, getLtiurl, getLaunchType, getLibLaunchType, getModType, getUserId, getOauthConsumerKey, getStatusUrl,
+    getHideInsert, getEmbedOpt, getInsertDelay, getBs5} from './options';
 
 import {setLink, setMedialLink} from "tiny_medial/link";
 import Selectors from 'tiny_medial/selectors';
@@ -110,7 +111,8 @@ const getTemplateContext = (editor) => {
         medialurl: getLtiurl(editor),
         launchurl: getBaseurl(editor) + "/mod/helixmedia/launch.php?type=" + getLaunchType(editor) + "&modtype=" + getModType(editor),
         hideinsert: getHideInsert(editor),
-        embedopt: getEmbedOpt(editor)
+        embedopt: getEmbedOpt(editor),
+        bs5: getBs5(editor),
     }, {});
 };
 

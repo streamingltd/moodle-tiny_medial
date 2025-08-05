@@ -41,6 +41,7 @@ const viewLaunchTypeName = getPluginOptionName(pluginName, 'viewLaunchType');
 const libLaunchTypeName = getPluginOptionName(pluginName, 'libLaunchType');
 const embedOptName = getPluginOptionName(pluginName, 'embedopt');
 const linkOnlyName = getPluginOptionName(pluginName, 'linkonly');
+const bs5Name = getPluginOptionName(pluginName, 'bs5');
 
 /**
  * Options registration function.
@@ -100,6 +101,9 @@ export const register = (editor) => {
     registerOption(linkOnlyName, {
         processor: 'boolean',
     });
+    registerOption(bs5Name, {
+        processor: 'boolean',
+    });
 };
 
 // TMW Note, when importing always use {} around the name, eg "import {getLtiurl} from './options';" .
@@ -144,3 +148,5 @@ export const getLibLaunchType = (editor) => editor.options.get(libLaunchTypeName
 export const getEmbedOpt = (editor) => editor.options.get(embedOptName);
 
 export const getLinkOnly = (editor) => editor.options.get(linkOnlyName);
+
+export const getBs5 = (editor) => editor.options.get(bs5Name);

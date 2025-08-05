@@ -22,7 +22,8 @@
     Example context (json):
     {"audioonly": false, "preid": 100, "url": "https://medial.com"}
 }}
-<div class='embed-responsive {{^audioonly}}embed-responsive-16by9{{/audioonly}} helixmedia_embedheight'
+<div class='{{^bs5}}embed-responsive {{^audioonly}}embed-responsive-16by9{{/audioonly}}{{/bs5}}
+    {{#bs5}}ratio {{^audioonly}}ratio-16x9{{/audioonly}}{{/bs5}} helixmedia_embedheight'
     {{#audioonly}}style='height:100px'{{/audioonly}}>
-    <iframe class='embed-responsive-item overflow-auto border-0' src='{{url}}' allow='fullscreen;'></iframe>
+    <iframe class='{{^bs5}}embed-responsive-item{{/bs5}} overflow-auto border-0' src='{{url}}' allow='fullscreen;'></iframe>
 </div>

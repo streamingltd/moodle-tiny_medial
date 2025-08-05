@@ -26,7 +26,7 @@
 
 import Templates from 'core/templates';
 import Pending from 'core/pending';
-import {getUserId, getOauthConsumerKey, getCourse, getPlayerSizeUrl, getBaseurl, getPlaceholder, getLinkOnly, getViewLaunchType} from './options';
+import {getUserId, getOauthConsumerKey, getCourse, getPlayerSizeUrl, getBaseurl, getPlaceholder, getLinkOnly, getViewLaunchType, getBs5} from './options';
 
 /**
  * Handle insertion of a new medial video
@@ -100,7 +100,8 @@ const checkResponse = async(preid, inserttype, editor, response) => {
 export const setMedialLink = async(preid, inserttype, editor, audioonly, launchtype, template) => {
 
     var context = {
-        url: getEmbedUrl(editor) + "?type=" + launchtype + "&responsive=1&medialembed=" + inserttype + "&audioonly=" + audioonly + "&l=" + preid
+        url: getEmbedUrl(editor) + "?type=" + launchtype + "&responsive=1&medialembed=" + inserttype + "&audioonly=" + audioonly + "&l=" + preid,
+        bs5: getBs5(editor)
     };
 
     if (audioonly == 1) {

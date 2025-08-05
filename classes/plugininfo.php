@@ -33,6 +33,7 @@ use editor_tiny\plugin_with_configuration;
 
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot.'/lib/editor/tiny/plugins/medial/lib.php');
+require_once($CFG->dirroot.'/mod/helixmedia/locallib.php');
 
 /**
  * Tiny MEDIAL plugin.
@@ -180,7 +181,7 @@ class plugininfo extends plugin implements plugin_with_configuration, plugin_wit
 
         $mtype = tiny_medial_checklist('modtypeperm');
         if ($mtype) {
-            if (has_capability('atto/helixatto:visiblemodtype', $context)) {
+            if (has_capability('tiny/medial:visiblemodtype', $context)) {
                 $modtype = $mtype;
                 $linkonly = true;
             }
@@ -209,6 +210,7 @@ class plugininfo extends plugin implements plugin_with_configuration, plugin_wit
             'libLaunchType' => $ll,
             'embedopt' => $embedopt,
             'linkonly' => $linkonly,
+            'bs5' => helixmedia_is_moodle_5(),
         ];
     }
 }

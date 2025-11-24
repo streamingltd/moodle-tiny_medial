@@ -50,7 +50,7 @@ export const setLink = (preid, inserttype, editor) => {
             console.log(error);
         });
     };
-    window.console.log(getPlayerSizeUrl(editor));
+
     xmlDoc.open("POST", getPlayerSizeUrl(editor), true);
     xmlDoc.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlDoc.send(params);
@@ -75,16 +75,50 @@ const checkResponse = async(preid, inserttype, editor, response) => {
     if (resp.length == 3 && resp[2] == 'Y') {
         audioonly = 1;
     }
-    window.console.log("audioonly=" + audioonly);
 
-    var template = "";
-    if (getLinkOnly(editor) || inserttype != 'iframe') {
-        template = 'tiny_medial/link';
-    } else {
-        template = 'tiny_medial/iframe';
+    setMedialLink(preid, inserttype, editor, audioonly, getViewLaunchType(editor), getTemplate(inserttype, editor), "", false);
+};
+
+/**
+ * Handle insertion of a new medial video when we have content item return data
+ *
+ * @param {int} preid
+ * @param {String} inserttype
+ * @param {TinyMCE} editor
+ * @param {object} data content item data
+ */
+export const setLinkCustom = (preid, inserttype, editor, data) => {
+    if (!('title' in data) || !('custom' in data) || !('audioonly' in data.custom)) {
+        /* eslint-disable no-console */
+        console.log("Bad message data");
+        console.log(data);
+        /* eslint-enable no-console */
+        return;
     }
 
-    setMedialLink(preid, inserttype, editor, audioonly, getViewLaunchType(editor), template);
+    // The custom data uses strings for everything becase the spec doesn't allow for other types.
+    var audioonly = 0;
+    if (data.custom.audioonly.toLowerCase() == "true") {
+        audioonly = 1;
+    }
+
+    setMedialLink(preid, inserttype, editor, audioonly, getViewLaunchType(editor), getTemplate(inserttype, editor),
+        data.title, data.custom.video_ref);
+};
+
+/**
+ * Gets the template to use for the link generator
+ *
+ * @param {String} inserttype
+ * @param {TinyMCE} editor
+ * @return {String} The template name
+ */
+const getTemplate = (inserttype, editor) => {
+    if (getLinkOnly(editor) || inserttype != 'iframe') {
+        return 'tiny_medial/link';
+    }
+
+    return 'tiny_medial/iframe';
 };
 
 /**
@@ -96,11 +130,17 @@ const checkResponse = async(preid, inserttype, editor, response) => {
  * @param {int} audioonly
  * @param {int} launchtype
  * @param {String} template
+ * @param {String} title
+ * @param {String} videoref
  */
-export const setMedialLink = async(preid, inserttype, editor, audioonly, launchtype, template) => {
-
+export const setMedialLink = async(preid, inserttype, editor, audioonly, launchtype, template, title, videoref) => {
+    var url = getEmbedUrl(editor) + "?type=" + launchtype + "&responsive=1&medialembed=" + inserttype + "&audioonly=" + audioonly + "&l=" + preid;
+    if (videoref) {
+        url += "&video_ref=" + videoref;
+    }
     var context = {
-        url: getEmbedUrl(editor) + "?type=" + launchtype + "&responsive=1&medialembed=" + inserttype + "&audioonly=" + audioonly + "&l=" + preid,
+        url: url,
+        title: title,
         bs5: getBs5(editor)
     };
 

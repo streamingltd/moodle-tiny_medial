@@ -30,7 +30,7 @@ import MedialModal from 'tiny_medial/modal';
 import {getBaseurl, getLtiurl, getLaunchType, getLibLaunchType, getModType, getUserId, getOauthConsumerKey, getStatusUrl,
     getHideInsert, getEmbedOpt, getInsertDelay, getBs5} from './options';
 
-import {setLink, setMedialLink} from "tiny_medial/link";
+import {setLink, setLinkCustom, setMedialLink} from "tiny_medial/link";
 import Selectors from 'tiny_medial/selectors';
 
 let preid = -1;
@@ -117,18 +117,25 @@ const getTemplateContext = (editor) => {
 };
 
 /**
- * Listener for the message that tells us the resource link ID
+ * Listener for the message that tells us the resource link ID and custom data
  * @param {Event} event The message event object
  **/
 export const receiveMessage = (event) => {
     if (typeof event.data === 'string') {
-
-
         var i = event.data.indexOf("preid_");
         if (i == 0) {
             preid = event.data.substring(6);
-            interval = setTimeout(checkStatus, 5000);
+            // We only do this for LTI 1, the consumer key will be false for newer LTI versions.
+            if (getOauthConsumerKey(ed)) {
+                interval = setTimeout(checkStatus, 5000);
+            }
         }
+    }
+
+    // Return data for LTI 1.3
+    if (typeof event.data === 'object') {
+        setLinkCustom(preid, getLinkType(ed), ed, event.data);
+        modalPromises.destroy();
     }
 };
 

@@ -32,8 +32,8 @@ use editor_tiny\plugin_with_menuitems;
 use editor_tiny\plugin_with_configuration;
 
 defined('MOODLE_INTERNAL') || die();
-require_once($CFG->dirroot.'/lib/editor/tiny/plugins/medial/lib.php');
-require_once($CFG->dirroot.'/mod/helixmedia/locallib.php');
+require_once($CFG->dirroot . '/lib/editor/tiny/plugins/medial/lib.php');
+require_once($CFG->dirroot . '/mod/helixmedia/locallib.php');
 
 /**
  * Tiny MEDIAL plugin.
@@ -42,8 +42,7 @@ require_once($CFG->dirroot.'/mod/helixmedia/locallib.php');
  * @copyright  2024 MEDIAL Tim Williams <tim@medial.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class plugininfo extends plugin implements plugin_with_configuration, plugin_with_buttons, plugin_with_menuitems {
-
+class plugininfo extends plugin implements plugin_with_buttons, plugin_with_configuration, plugin_with_menuitems {
     /**
      * Whether the plugin is enabled
      *
@@ -193,14 +192,20 @@ class plugininfo extends plugin implements plugin_with_configuration, plugin_wit
             $ll = -1;
         }
 
+        if (get_config('helixmedia', 'ltiversion') == LTI_VERSION_1) {
+            $oauthkey = get_config('helixmedia', 'consumer_key');
+        } else {
+            $oauthkey = false;
+        }
+
         return [
             'baseurl' => $CFG->wwwroot,
-            'ltiurl' => get_config("helixmedia", "launchurl"),
+            'ltiurl' => helixmedial_launch_url(),
             'statusurl' => helixmedia_get_status_url(),
             'userid' => intval($USER->id),
             'hideinsert' => $hideinsert,
             'insertdelay' => $modaldelay,
-            'oauthConsumerKey' => get_config('helixmedia', 'consumer_key'),
+            'oauthConsumerKey' => $oauthkey,
             'modtype' => $modtype,
             'placeholder' => $placeholder,
             'playersizeurl' => helixmedia_get_playerwidthurl(),
